@@ -1,0 +1,43 @@
+name: Deploy to Test and Production
+
+on:
+  push:
+    branches:
+      - main          # Despliegue a producción en la rama main
+      - test          # Despliegue a test en la rama test
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Clonar el repositorio
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Instalar Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Asegúrate de usar la misma versión que tu proyecto
+
+      # 3. Instalar dependencias
+      - name: Install dependencies
+        run: pnpm install
+
+      # 4. Construir el proyecto
+      - name: Build project
+        run: pnpm run build
+
+      # 5. Desplegar a Firebase Hosting o Cloud Run (según tu configuración)
+      - name: Deploy to Firebase
+        if: github.ref == 'refs/heads/main' # Condición para producción
+        run: |
+          pnpm install -g firebase-tools
+          firebase deploy --only hosting:production --token "${{ secrets.FIREBASE_DEPLOY_TOKEN }}"
+
+      - name: Deploy to Firebase Test
+        if: github.ref == 'refs/heads/test' # Condición para test
+        run: |
+          pnpm install -g firebase-tools
+          firebase deploy --only hosting:test --token "${{ secrets.FIREBASE_DEPLOY_TOKEN }}"

@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "test": "sozu-admin-dev"
+  },
+  "targets": {
+    "sozu-admin-dev": {
+      "hosting": {
+        "test": [
+          "726529221677"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
