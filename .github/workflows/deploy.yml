@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '23.5'  # Cambié la versión al menos a 18 para compatibilidad con Nuxt
+          node-version: '23.5'
 
       # 3. Instalar dependencias
       - name: Install dependencies
@@ -33,14 +33,13 @@ jobs:
       - name: Build Nuxt.js project
         run: npm run build
 
-      # 6. Desplegar a Firebase Functions en producción
-      - name: Deploy to Firebase Functions (Production)
-        if: github.ref == 'refs/heads/main'  # Solo en la rama main
+      # 6. Desplegar a Firebase Functions (según la rama)
+      - name: Deploy to Firebase Functions
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
         run: |
-          firebase deploy --only functions --token "${{ secrets.FIREBASE_DEPLOY_TOKEN }}"
-
-      # 7. Desplegar a Firebase Functions en test
-      - name: Deploy to Firebase Functions (Test)
-        if: github.ref == 'refs/heads/test'  # Solo en la rama test
-        run: |
-          firebase deploy --only functions --token "${{ secrets.FIREBASE_DEPLOY_TOKEN }}"
+          if [ "${GITHUB_REF##*/}" = "main" ]; then
+            firebase deploy --only functions --token "${{ secrets.FIREBASE_DEPLOY_TOKEN }}"
+          elif [ "${GITHUB_REF##*/}" = "test" ]; then
+            firebase deploy --only functions --token "${{ secrets.FIREBASE_DEPLOY_TOKEN }}"
+          fi

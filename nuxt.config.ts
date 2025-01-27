@@ -25,7 +25,7 @@ export default defineNuxtConfig({
     },
   },
 
-  ssr: false,
+  ssr: true,
 
   // import PrimeVue, PrimeFlex and PrimeIcons css
   css: [
@@ -38,6 +38,7 @@ export default defineNuxtConfig({
   // build settings
   build: {
     transpile: ['primevue'],
+    outDir: 'functions/.output',
   },
 
   modules: [
