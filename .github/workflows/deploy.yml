@@ -15,27 +15,31 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Configurar Node.js
+      # 2. Configurar Node.js con una versión compatible
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '23.5'
+          node-version: '23.5'  # Cambié la versión al menos a 18 para compatibilidad con Nuxt
 
       # 3. Instalar dependencias
       - name: Install dependencies
         run: npm install
 
-      # 4. Construir el proyecto Nuxt.js
+      # 4. Instalar Firebase CLI
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      # 5. Construir el proyecto Nuxt.js
       - name: Build Nuxt.js project
         run: npm run build
 
-      # 5. Desplegar a Firebase Functions en producción
+      # 6. Desplegar a Firebase Functions en producción
       - name: Deploy to Firebase Functions (Production)
         if: github.ref == 'refs/heads/main'  # Solo en la rama main
         run: |
           firebase deploy --only functions --token "${{ secrets.FIREBASE_DEPLOY_TOKEN }}"
 
-      # 6. Desplegar a Firebase Functions en test
+      # 7. Desplegar a Firebase Functions en test
       - name: Deploy to Firebase Functions (Test)
         if: github.ref == 'refs/heads/test'  # Solo en la rama test
         run: |
