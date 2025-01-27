@@ -1,6 +1,7 @@
 {
   "projects": {
-    "test": "sozu-admin-dev"
+    "test": "sozu-admin-dev",
+    "default": "sozu-admin-dev"
   },
   "targets": {
     "sozu-admin-dev": {
