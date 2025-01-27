@@ -29,25 +29,30 @@ jobs:
       - name: Install pnpm
         run: |
           npm install -g pnpm
-          echo "PNPM_HOME=$(pnpm prefix -g)" >> $GITHUB_ENV  # Configura la variable de entorno PNPM_HOME
-          echo "$(pnpm prefix -g)/bin" >> $GITHUB_PATH  # Agregar binarios globales al PATH
+          pnpm setup
 
-      # 5. Instalar dependencias
+      # 5. Establecer el PATH para que los binarios globales de pnpm estén accesibles
+      - name: Set PNPM_HOME and add global bin to PATH
+        run: |
+          echo "PNPM_HOME=$(pnpm prefix -g)" >> $GITHUB_ENV
+          echo "$(pnpm prefix -g)/bin" >> $GITHUB_PATH
+
+      # 6. Instalar dependencias
       - name: Install dependencies
         run: pnpm install
 
-      # 6. Construir el proyecto
+      # 7. Construir el proyecto
       - name: Build project
         run: pnpm run build
 
-      # 7. Desplegar a Firebase Hosting o Cloud Run (según tu configuración)
-      - name: Deploy to Firebase
+      # 8. Desplegar a Firebase Hosting o Cloud Run (según tu configuración)
+      - name: Deploy to Firebase (Production)
         if: github.ref == 'refs/heads/main' # Condición para producción
         run: |
           pnpm install -g firebase-tools
           firebase deploy --only hosting:production --token "${{ secrets.FIREBASE_DEPLOY_TOKEN }}"
 
-      - name: Deploy to Firebase Test
+      - name: Deploy to Firebase (Test)
         if: github.ref == 'refs/heads/test' # Condición para test
         run: |
           pnpm install -g firebase-tools
