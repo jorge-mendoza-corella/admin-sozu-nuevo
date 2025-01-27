@@ -30,7 +30,7 @@ jobs:
         run: |
           npm install -g pnpm
           echo "PNPM_HOME=$(pnpm prefix -g)" >> $GITHUB_ENV  # Configura la variable de entorno PNPM_HOME
-          echo "$PNPM_HOME/bin" >> $GITHUB_PATH  # Asegura que el directorio de binarios esté en el PATH
+          echo "$(pnpm prefix -g)/bin" >> $GITHUB_PATH  # Agregar binarios globales al PATH
 
       # 5. Instalar dependencias
       - name: Install dependencies
