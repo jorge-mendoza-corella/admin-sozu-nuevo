@@ -25,6 +25,7 @@ jobs:
       - name: Install pnpm
         run: |
           npm install -g pnpm
+          pnpm setup # Configura correctamente el directorio de binarios globales
 
       # 4. Instalar dependencias
       - name: Install dependencies
