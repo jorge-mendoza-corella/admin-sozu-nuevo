@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '23.5' # Asegúrate de usar una versión compatible con tu proyecto
+          node-version: '23.5' # Versión LTS compatible con la mayoría de dependencias
 
       # 3. Establecer SHELL para evitar problemas con pnpm
       - name: Set SHELL environment variable
@@ -30,6 +30,7 @@ jobs:
         run: |
           npm install -g pnpm
           pnpm setup # Configura correctamente el directorio de binarios globales
+          pnpm --version  # Comprobamos la versión de pnpm para asegurarnos de que se instaló correctamente
 
       # 5. Instalar dependencias
       - name: Install dependencies
@@ -40,13 +41,13 @@ jobs:
         run: pnpm run build
 
       # 7. Desplegar a Firebase Hosting o Cloud Run (según tu configuración)
-      - name: Deploy to Firebase
+      - name: Deploy to Firebase (Production)
         if: github.ref == 'refs/heads/main' # Condición para producción
         run: |
           pnpm install -g firebase-tools
           firebase deploy --only hosting:production --token "${{ secrets.FIREBASE_DEPLOY_TOKEN }}"
 
-      - name: Deploy to Firebase Test
+      - name: Deploy to Firebase (Test)
         if: github.ref == 'refs/heads/test' # Condición para test
         run: |
           pnpm install -g firebase-tools
