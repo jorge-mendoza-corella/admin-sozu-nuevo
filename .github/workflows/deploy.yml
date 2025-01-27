@@ -19,17 +19,22 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '23.5.0' # Asegúrate de usar la misma versión que tu proyecto
+          node-version: '16' # Asegúrate de usar una versión compatible con tu proyecto
 
-      # 3. Instalar dependencias
+      # 3. Instalar pnpm
+      - name: Install pnpm
+        run: |
+          npm install -g pnpm
+
+      # 4. Instalar dependencias
       - name: Install dependencies
         run: pnpm install
 
-      # 4. Construir el proyecto
+      # 5. Construir el proyecto
       - name: Build project
         run: pnpm run build
 
-      # 5. Desplegar a Firebase Hosting o Cloud Run (según tu configuración)
+      # 6. Desplegar a Firebase Hosting o Cloud Run (según tu configuración)
       - name: Deploy to Firebase
         if: github.ref == 'refs/heads/main' # Condición para producción
         run: |
