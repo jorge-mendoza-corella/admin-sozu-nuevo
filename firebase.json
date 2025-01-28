@@ -1,7 +1,4 @@
 {
-  "functions": {
-    "source": ".output/server"
-  },
   "hosting": [
     {
       "site": "<your_project_id>",

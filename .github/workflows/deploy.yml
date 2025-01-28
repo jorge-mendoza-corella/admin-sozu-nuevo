@@ -1,0 +1,37 @@
+name: Deploy to Firebase (Test & Production)
+
+on:
+  push:
+    branches:
+      - test
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Select Firebase Project and Deploy
+        env:
+          FIREBASE_AUTH_TOKEN: ${{ secrets.FIREBASE_AUTH_TOKEN }}
+        run: |
+          if [ "${{ github.ref_name }}" == "main" ]; then
+            firebase use prod --token "$FIREBASE_AUTH_TOKEN"
+          else
+            firebase use test --token "$FIREBASE_AUTH_TOKEN"
+          fi
+          firebase deploy --only hosting
