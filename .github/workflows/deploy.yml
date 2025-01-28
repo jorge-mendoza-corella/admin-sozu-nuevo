@@ -25,16 +25,18 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
+      - name: Set GOOGLE_APPLICATION_CREDENTIALS environment variable
+        run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > "${{ github.workspace }}/firebase-key.json"
+
       - name: Build Project
         run: npm run build
 
       - name: Select Firebase Project and Deploy
-        env:
-          FIREBASE_AUTH_TOKEN: ${{ secrets.FIREBASE_AUTH_TOKEN }}
         run: |
+          export GOOGLE_APPLICATION_CREDENTIALS="${{ github.workspace }}/firebase-key.json"
           if [ "${{ github.ref_name }}" == "main" ]; then
-            firebase use prod --token "$FIREBASE_AUTH_TOKEN"
+            firebase use prod
           else
-            firebase use test --token "$FIREBASE_AUTH_TOKEN"
+            firebase use test
           fi
           firebase deploy --only hosting
