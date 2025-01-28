@@ -18,12 +18,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '22'
+          
+      - name: Debug environment variables
+        run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}"
 
       - name: Install Dependencies
         run: npm install
-
-      - name: Debug environment variables
-        run: echo $GOOGLE_APPLICATION_CREDENTIALS
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
