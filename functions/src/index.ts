@@ -1,3 +1,6 @@
-import { handle } from 'nitropack/functions';
+import { defineNitroConfig } from 'nitropack/functions';
 
-export const ssr = handle();
+// Define las funciones aquí
+export default defineNitroConfig({
+  // Configuración específica de Nitro
+});

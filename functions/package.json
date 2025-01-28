@@ -14,11 +14,11 @@
   "engines": {
     "node": "22"
   },
-  "main": "lib/index.js",
+  "main": "index.js",
   "dependencies": {
     "firebase-admin": "^11.0.1",
     "firebase-functions": "^4.3.0",
-    "nitropack": "^2.0.0",
+    "nitropack": "^2.10.4",
     "tough-cookie": "^4.0.0"
   },
   "devDependencies": {
