@@ -97,4 +97,3 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-01-09',
 })
-// linea 100
