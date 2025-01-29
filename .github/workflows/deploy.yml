@@ -42,4 +42,4 @@ jobs:
           else
             firebase use test
           fi
-          firebase deploy --only hosting
+          firebase deploy --only hosting 
