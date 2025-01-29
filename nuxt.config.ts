@@ -27,6 +27,18 @@ export default defineNuxtConfig({
 
   ssr: false,
 
+  target: 'static', // Para un proyecto estático
+
+  nitro: {
+    preset: 'static'
+  },
+
+  // build settings
+  build: {
+    outputDir: '.output',
+    transpile: ['primevue'],
+  },  
+
   // import PrimeVue, PrimeFlex and PrimeIcons css
   css: [
     'primevue/resources/themes/lara-light-teal/theme.css',
@@ -35,26 +47,11 @@ export default defineNuxtConfig({
     'primeflex/primeflex.css',
   ],
 
-  // build settings
-  build: {
-    transpile: ['primevue'],
-  },
-
   modules: [
     // ... other modules
     '@vueuse/nuxt',
     'nuxt-icon',
   ],
-
-  // nitro server settings
-  nitro: {
-    compatibilityDate: process.env.COMPATIBILITY_DATE || '2025-01-09',
-    preset: 'firebase',
-    firebase: {
-      gen: 2, // Asegúrate de que estés usando Firebase Functions Gen 2
-      serverFunctionName: 'adminssr',
-    },
-  },
 
   runtimeConfig: {
     // Private config that is only available on the server
