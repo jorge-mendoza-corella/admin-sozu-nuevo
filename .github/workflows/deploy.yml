@@ -19,40 +19,24 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Check if secret exists (for debug)
-        run: |
-          if [ -z "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" ]; then
-            echo "Secret GOOGLE_APPLICATION_CREDENTIALS is missing!"
-            exit 1
-          else
-            echo "Secret GOOGLE_APPLICATION_CREDENTIALS is available."
-          fi
-
       - name: Install Dependencies
         run: npm install
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      - name: Set GOOGLE_APPLICATION_CREDENTIALS environment variable
-        run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > "${{ github.workspace }}/firebase-key.json"
-
-      # For debugging: check if the file was created
-      - name: Check if Firebase key file exists
+      - name: Set up Firebase authentication
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
         run: |
-          if [ -f "${{ github.workspace }}/firebase-key.json" ]; then
-            echo "Firebase key file created successfully."
-          else
-            echo "Firebase key file not found."
-            exit 1
-          fi
+          echo "$GOOGLE_CREDENTIALS" > "$HOME/firebase-key.json"
+          export GOOGLE_APPLICATION_CREDENTIALS="$HOME/firebase-key.json"
 
       - name: Build Project
         run: npm run build
 
       - name: Select Firebase Project and Deploy
         run: |
-          export GOOGLE_APPLICATION_CREDENTIALS="${{ github.workspace }}/firebase-key.json"
           if [ "${{ github.ref_name }}" == "main" ]; then
             firebase use prod
           else
