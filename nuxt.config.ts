@@ -30,10 +30,7 @@ export default defineNuxtConfig({
   target: 'static', // Para un proyecto estático
 
   nitro: {
-    preset: 'firebase',
-    firebase: {
-      gen: '2' // Esto cambiará a la versión de segunda generación de Firebase Functions.
-    }
+    preset: 'static'
   },
 
   // build settings
