@@ -2,7 +2,7 @@
   "name": "admin",
   "private": true,
   "scripts": {
-    "build": "nuxt build",
+    "build": "nuxt build && nuxt generate",
     "dev": "NODE_OPTIONS='--no-deprecation' nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
