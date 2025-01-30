@@ -27,10 +27,10 @@ jobs:
 
       - name: Set up Firebase authentication
         env:
-          FIREBASE_SERVICE_ACCOUNT_SOZU_ADMIN_DEV: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SOZU_ADMIN_DEV }}
+          FIREBASE_SERVICE_ACCOUNT_SOZU_ADMIN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SOZU_ADMIN }}
         run: |
-          echo "$FIREBASE_SERVICE_ACCOUNT_SOZU_ADMIN_DEV" > "$HOME/firebase-key.json"
-          export FIREBASE_SERVICE_ACCOUNT_SOZU_ADMIN_DEV="$HOME/firebase-key.json"
+          echo "$FIREBASE_SERVICE_ACCOUNT_SOZU_ADMIN" > "$HOME/firebase-key.json"
+          export FIREBASE_SERVICE_ACCOUNT_SOZU_ADMIN="$HOME/firebase-key.json"
 
       - name: Build Project
         run: npm run build
