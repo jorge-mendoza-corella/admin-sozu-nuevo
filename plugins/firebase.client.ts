@@ -16,6 +16,7 @@
       appId: config.public.FIREBASE_APP_ID,
     }
 
+    console.log('apiKey:', config.public.FIREBASE_API_KEY);
     // Initialize Firebase
     const fireApp = initializeApp(firebaseConfig);
     const auth = getAuth(fireApp);
