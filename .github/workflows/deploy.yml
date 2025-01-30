@@ -30,7 +30,7 @@ jobs:
           FIREBASE_SERVICE_ACCOUNT_SOZU_ADMIN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SOZU_ADMIN }}
         run: |
           echo "$FIREBASE_SERVICE_ACCOUNT_SOZU_ADMIN" > "$HOME/firebase-key.json"
-          export FIREBASE_SERVICE_ACCOUNT_SOZU_ADMIN="$HOME/firebase-key.json"
+          export GOOGLE_APPLICATION_CREDENTIALS="$HOME/firebase-key.json"
 
       - name: Build Project
         run: npm run build
