@@ -25,21 +25,16 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      - name: Set up Firebase authentication
-        env:
-          FIREBASE_SERVICE_ACCOUNT_SOZU_ADMIN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SOZU_ADMIN }}
-        run: |
-          echo "$FIREBASE_SERVICE_ACCOUNT_SOZU_ADMIN" > "$HOME/firebase-key.json"
-          export GOOGLE_APPLICATION_CREDENTIALS="$HOME/firebase-key.json"
-
       - name: Build Project
         run: npm run build
 
       - name: Select Firebase Project and Deploy
+        env:
+            FIREBASE_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
         run: |
           if [ "${{ github.ref_name }}" == "main" ]; then
             firebase use prod
           else
             firebase use test
           fi
-          firebase deploy --only hosting 
+          firebase deploy --only hosting --token "$FIREBASE_TOKEN"
