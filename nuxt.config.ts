@@ -1,4 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { loadSecrets } from './plugins/loadSecrets'
+
+// Cargar los secretos antes de definir la configuración de Nuxt
+await loadSecrets()
+
 export default defineNuxtConfig({
   app: {
     head: {
